@@ -1,5 +1,5 @@
 # This file is only for UST students to use illegally.
-import argparse
+# v2.0
 import configparser
 import datetime
 import json
@@ -12,7 +12,8 @@ import requests
 class User:
     def __init__(self, cookie=None, auth=None, wecom_cid=None, wecom_secret=None, wecom_touid=None,
                  wecom_aid=None, wecom_on=None):
-        self.cookie, self.auth, self.wecom_cid, self.wecom_secret, self.wecom_touid, self.wecom_aid, self.wecom_on = list(zip(*self.get_config()))[1]
+        self.cookie, self.auth, self.wecom_cid, self.wecom_secret, self.wecom_touid, self.wecom_aid, self.wecom_on = \
+        list(zip(*self.get_config()))[1]
 
     def send_to_wecom(self, text):
         get_token_url = f"https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={self.wecom_cid}&corpsecret=" \
@@ -47,7 +48,8 @@ class User:
 
 
 class Booking:
-    def __init__(self, booked_info=None, available_ground=[], facilityID=[2, 3, 4, 5, 79, 80, 100, 101,6], time_status={}):
+    def __init__(self, booked_info=None, available_ground=[], facilityID=[2, 3, 4, 5, 79, 80, 100, 101],
+                 time_status={}):
         self.booked_info = booked_info
         self.available_ground = available_ground
         self.facilityID = facilityID
@@ -171,13 +173,15 @@ class Booking:
         for item in self.available_ground:
             if item['timeslotDate'] in self.time_status.keys():
                 if self.time_status[item['timeslotDate']] == 'N':
-                    self.post_booking(item['facilityID'], item['timeslotDate'], item['startTime'], item['endTime'], cookie, auth)
+                    self.post_booking(item['facilityID'], item['timeslotDate'], item['startTime'], item['endTime'],
+                                      cookie, auth)
                     self.time_status[item['timeslotDate']] = "Y"
 
     def initial_time(self):
         for i in range(7):
             self.time_status.update({(datetime.datetime.now() + datetime.timedelta(days=i)).strftime("%Y-%m-%d"): "N"})
         print("System initialized successfully!")
+
     def update_time_status(self):
         for item in self.booked_info:
             if item['timeslotDate'] in self.time_status:

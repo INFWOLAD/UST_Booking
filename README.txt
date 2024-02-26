@@ -1,5 +1,5 @@
 You need to read this txt file carefully to run successfully
-UST_Booking v2.0.(with booking)
+UST_Booking v2.0.1.(with booking)[Only Badmination now]
 
 How to use:
     1. Fill 'config_template.ini' with your information and rename it as 'config.ini'.
