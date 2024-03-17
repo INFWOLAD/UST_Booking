@@ -1,5 +1,5 @@
 # This file is only for UST students to use illegally.
-# v2.0
+# v2.0.2
 import configparser
 import datetime
 import json
@@ -77,14 +77,14 @@ class Booking:
                     "Accept-Encoding": "gzip;q=1.0, compress;q=0.5",
                 },
             )
-            print('get_booked_info: Response HTTP Status Code: {status_code}'.format(
-                status_code=response.status_code))
+            # print('get_booked_info: Response HTTP Status Code: {status_code}'.format(
+            #     status_code=response.status_code))
             # print(response.content)
             content = response.json()
             # print(content)
             if content['message'] == 'Booking info not found':
                 self.booked_info = []
-                print('Booking info not found')
+                print('There is no booked facility.')
             else:
                 self.booked_info = content['booking']
                 print(f"Booking info: {self.booked_info}")
@@ -115,10 +115,10 @@ class Booking:
                     "Accept-Encoding": "gzip;q=1.0, compress;q=0.5",
                 },
             )
-            print('get_status: Response HTTP Status Code: {status_code}'.format(
-                status_code=response.status_code))
+            # print('get_status: Response HTTP Status Code: {status_code}'.format(
+            #     status_code=response.status_code))
             content = response.json()
-            print(content)
+            # print(content)
             return content
         except:
             print('get_status: HTTP Request failed')
@@ -160,8 +160,8 @@ class Booking:
                     "Accept-Encoding": "gzip;q=1.0, compress;q=0.5",
                 },
             )
-            print('post_booking: Response HTTP Status Code: {status_code}'.format(
-                status_code=response.status_code))
+            # print('post_booking: Response HTTP Status Code: {status_code}'.format(
+            #     status_code=response.status_code))
             if response.json()['message'] == 'Booking Result found':
                 print('Booking Success')
                 return True
@@ -196,9 +196,13 @@ if __name__ == '__main__':
     # print(user.auth)
     book.get_booked_info(user.cookie, user.auth)
     if user.wecom_on:
-        user.send_to_wecom(f"Booked information: {book.booked_info}")
+        if not book.booked_info:
+            user.send_to_wecom(f"USTBooking System Start.\nBooked information: There's no Booked facility.")
+        else:
+            user.send_to_wecom(f"USTBooking System Start.\nBooked information: {book.booked_info}")
     book.update_time_status()
     while "N" in book.time_status.values():
+        print(datetime.datetime.now().strftime("[%Y/%m/%d-%H:%M:%S]")+" Monitoring...")
         book.release_status(user.cookie, user.auth)
         book.ready_book(user.cookie, user.auth)
         time.sleep(30)
