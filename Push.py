@@ -9,7 +9,7 @@ import requests
 class Information:
     def __init__(self):
         # input your own information(only id)
-        self.ustID =
+        self.ustID = ''
         self.date = 'None'
         self.hour = 'None'
         self.facilities = [0, 1, 2, 3]

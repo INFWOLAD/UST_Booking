@@ -9,7 +9,8 @@ How to use:
     3. Enjoy it.
 
 Notice:
-    1. 'Push.py' is the first version without auto-booking, and using 'hkust student''s api as it ports.
+    1. Some SSL issues may be caused by urllib3>=1.26.7, so strongly commend you to use previous versions of urllib3
+        You can use requirements.txt to help you configure the environment.
+    2. 'Push.py' is the first version without auto-booking, and using 'hkust student''s api as it ports.
         If you want to use it, filling some parts with comments is neccessary.
-    2. For v2, we are now using USThings and modified some range of posting part.
     3. For other information, maybe you can contact me via cosz@foxmail.com
